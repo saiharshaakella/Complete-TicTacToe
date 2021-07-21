@@ -1,109 +1,127 @@
-import React, { useState } from 'react'
-import Icon from "./Components/icon"
+import React,{useState} from "react"
+import Icons from"./Components/Icons"
+import { FaTimes,FaRegCircle } from "react-icons/fa"
 
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
-import { Button, Container, Card, CardBody, Row, Col } from 'reactstrap';
-import 'bootstrap/dist/css/bootstrap.css';
+import { Button,Container,Card,CardBody,Row,Col} from "reactstrap"
+import 'bootstrap/dist/css/bootstrap.css'
 import "./style.css"
+import { icons } from "react-icons/lib"
 
+let tictaktoeArray = new Array(9).fill("")
+let App = ()=>{
 
-const tictakArray = new Array(9).fill("")
-const App = () => {
-    let [isCross, setIsCross] = useState(true)
-    let [winMessage ,setWinMessage] = useState("")
+    let [isCross,setIsCross] = useState()
+    let [winMessage,setWinMessage] = useState("")
 
+    const choiceIcon = ()=>{
+        setIsCross(true)
+    }
+
+    const choiceIcons = ()=>{
+        setIsCross(false)
+    }
+   
     const playAgain=()=>{
         setIsCross(true)
         setWinMessage("")
-        tictakArray.fill("")
+        tictaktoeArray.fill("")
     }
-
-    const findWinner=() =>{
-        if(tictakArray[0] == tictakArray[1] && tictakArray[0] == tictakArray[2] && tictakArray[0] != ""){
-            setWinMessage(tictakArray[0]+" has won")
+    const findWinner = ()=>{
+        if(tictaktoeArray[0]==tictaktoeArray[1] && tictaktoeArray[0]==tictaktoeArray[2] && tictaktoeArray[0]!=""){
+            setWinMessage(tictaktoeArray[0] + " has Won ")
+            return toast(  tictaktoeArray[0] + " has Won ",{type:"success"})
         }
-        else if(tictakArray[3] == tictakArray[4] && tictakArray[3] == tictakArray[5] && tictakArray[3] != ""){
-            setWinMessage(tictakArray[3]+" has won")
-        } 
-        else if(tictakArray[6] == tictakArray[7] && tictakArray[6] == tictakArray[8] && tictakArray[6] != ""){
-            setWinMessage(tictakArray[6]+" has won")
-        } 
-        else if(tictakArray[0] == tictakArray[3] && tictakArray[0] == tictakArray[6] && tictakArray[0] != ""){
-            setWinMessage(tictakArray[0]+" has won")
-        } 
-        else if(tictakArray[1] == tictakArray[4] && tictakArray[1] == tictakArray[7] && tictakArray[1] != ""){
-            setWinMessage(tictakArray[1]+" has won")
-        } 
-        else if(tictakArray[2] == tictakArray[5] && tictakArray[2] == tictakArray[8] && tictakArray[2] != ""){
-            setWinMessage(tictakArray[2]+" has won")
-        } 
-        else if(tictakArray[2] == tictakArray[4] && tictakArray[2] == tictakArray[6] && tictakArray[2] != ""){
-            setWinMessage(tictakArray[2]+" has won")
-        } 
-        else if(tictakArray[0] == tictakArray[4] && tictakArray[0] == tictakArray[8] && tictakArray[0] != ""){
-            setWinMessage(tictakArray[0]+" has won")
-        } 
+        else if(tictaktoeArray[0]==tictaktoeArray[3] && tictaktoeArray[0]==tictaktoeArray[6] && tictaktoeArray[0]!=""){
+            setWinMessage(tictaktoeArray[0] + " has Won ")
+            return toast(  tictaktoeArray[0] + " has Won ",{type:"success"})
+        }
+        else if(tictaktoeArray[3]==tictaktoeArray[4] && tictaktoeArray[3]==tictaktoeArray[5] && tictaktoeArray[3]!=""){
+            setWinMessage(tictaktoeArray[3] + " has Won ")
+            return toast(  tictaktoeArray[3] + " has Won ",{type:"success"})
+        }
+        else if(tictaktoeArray[6]==tictaktoeArray[7] && tictaktoeArray[6]==tictaktoeArray[8] && tictaktoeArray[6]!=""){
+            setWinMessage(tictaktoeArray[6] + " has Won ")
+            return toast(  tictaktoeArray[6] + " has Won ",{type:"success"})
+        }
+        else if(tictaktoeArray[1]==tictaktoeArray[4] && tictaktoeArray[1]==tictaktoeArray[7] && tictaktoeArray[1]){
+            setWinMessage(tictaktoeArray[1] + " has Won ")
+            return toast(  tictaktoeArray[1] + " has Won ",{type:"success"})
+        }
+        else if(tictaktoeArray[2]==tictaktoeArray[5] && tictaktoeArray[2]==tictaktoeArray[8] && tictaktoeArray[2]){
+            setWinMessage(tictaktoeArray[2] + " has Won ")
+            return toast(  tictaktoeArray[2] + " has Won ",{type:"success"})
+        }
+        else if(tictaktoeArray[0]==tictaktoeArray[4] && tictaktoeArray[0]==tictaktoeArray[8] && tictaktoeArray[0]){
+            setWinMessage(tictaktoeArray[0] + " has Won ")
+            return toast(  tictaktoeArray[0] + " has Won ",{type:"success"})
+        }
+        else if(tictaktoeArray[2]==tictaktoeArray[4] && tictaktoeArray[2]==tictaktoeArray[6] && tictaktoeArray[2]){
+            setWinMessage(tictaktoeArray[2] + " has Won ")
+            return toast(  tictaktoeArray[2] + " has Won ",{type:"success"})
+        }
 
+        let MatchDraw = !tictaktoeArray.includes("")
+        if(MatchDraw){
+            setWinMessage("`Game ended in a draw..!")
+            return toast( "Match Draw..!!",{type:"dark"})
+        }
     }
-
-    const changeItem = (index) =>{
+    
+    const changeItem = (index)=>{
         if(winMessage){
-            return toast("Game has already got over", {type: "success"})
+            return toast("Game has already got over",{type:"info"})
         }
-        if(tictakArray[index] == ""){
-            tictakArray[index] = isCross ? "cross" : "circle";
+        if(tictaktoeArray[index] ==""){
+            tictaktoeArray[index] = isCross? "cross" : "circle"  
             setIsCross(!isCross)
         }
         else{
-            return toast("​Open your eyes dude where are you tapping", {type: "error"})
+            return toast("Something is Already there..",{type:"error"})
         }
         findWinner()
     }
 
     return(
-        <Container className="p-5">
-            <ToastContainer position="bottom-center" > </ToastContainer>
-            <Row>
-
-                <Col md={6} className="offset-md-3"> 
-
-                    {
-                        winMessage? (
-                            <div>
-                            <h1 className="text-center"> 
-                            {winMessage}
-                            </h1>
-                            <Button onClick={playAgain}> Play Again</Button>
-                            </div>
-                        ) : (
-                            <h1>
-                                {isCross? "Cross's Turn": "Circle's Turn"}
-                            </h1>
-                        )
-
-                    }
-
-                    <div className="grid"> 
-                        {tictakArray.map((value, index)=>(
-                            <Card onClick={()=>changeItem(index)}> 
-                                <CardBody className="box"> 
-                                    <Icon choice={tictakArray[index]}/>
-                                </CardBody>
-                            </Card>
-                        ))}
-
-                     </div>
-
-                
-
-                </Col>
-
-            </Row>
-
-        </Container>
+        <div>
+            <Container className="p-5">
+                <ToastContainer position="bottom-center"></ToastContainer>
+                <Row>
+                    <Col md={6} className="offset-md-3">
+                        {
+                            winMessage?(
+                                <div className="msg">
+                                    <h1 className="text-Center">{winMessage}</h1>
+                                    <Button className="button" onClick={playAgain}>Play Again</Button>
+                                </div>
+                            ):(
+                                <h1 className="label">
+                                    {isCross?   "cross's Turn ":  "circle's Turn"}
+                                </h1>
+                               
+                            )
+                        }
+                        <br />
+                        <div  style={{textAlign: "center",color:"whitesmoke",fontWeight:"bold"}}>
+                            Choose Icons :- 
+                            <button className="btn" style={{textAlign: "center"}}  onClick={choiceIcon}><FaTimes /></button>
+                            <button className="btn" style={{textAlign: "center"}} onClick={choiceIcons}><FaRegCircle /></button>
+                        </div>
+                        <div className="grid">
+                            {tictaktoeArray.map((value,index)=>(
+                                <Card  className="card" onClick={()=>changeItem(index)}>
+                                    <CardBody className="box">
+                                        <Icons choice={tictaktoeArray[index]}/>
+                                    </CardBody>
+                                </Card>
+                            ))}
+                        </div>
+                    </Col>
+                </Row>
+            </Container>
+        </div>
     )
 }
-
 export default App
